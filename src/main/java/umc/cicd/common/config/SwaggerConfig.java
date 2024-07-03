@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -33,11 +34,9 @@ public class SwaggerConfig implements WebMvcConfigurer {
                         .scheme("bearer")
                         .bearerFormat("JWT"));
 
-        Server server = new Server();
-        server.setUrl("https://dev.seungyeon.shop");
-
         return new OpenAPI()
-                .servers(List.of(server))
+                .servers(Arrays.asList(
+                        new Server().url("https://dev.seungyeon.shop").description("Develop server"), new Server().url("http://localhost:8080").description("Local server")))
                 .info(info)
                 .addSecurityItem(securityRequirement)
                 .components(components);
